@@ -287,7 +287,7 @@ String toString($parameters) {
   String get _operatorEqualMethod {
     final properties = constructor.impliedProperties.map((p) {
       final name = p.name == 'other' ? 'this.other' : p.name;
-      return '(identical(other.${p.name}, $name) || const DeepCollectionEquality().equals(other.${p.name}, $name))';
+      return '(other.${p.name} == $name)';
     });
 
     return '''
@@ -303,7 +303,7 @@ bool operator ==(dynamic other) {
 
   String get _hashCodeMethod {
     var hashCodeImpl = constructor.impliedProperties.map((p) {
-      return '^ const DeepCollectionEquality().hash(${p.name})';
+      return '^ ${p.name}.hashCode';
     }).join();
 
     return '''
